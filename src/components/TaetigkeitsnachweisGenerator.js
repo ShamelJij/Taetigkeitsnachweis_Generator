@@ -60,34 +60,31 @@ const TaetigkeitsnachweisGenerator = () => {
       const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
       const helveticaBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 try {
-      // Option 1: If you have the logo as a URL
-      //const logoUrl = 'https://example.com/logo.png';
-      //const logoImageBytes = await fetch(logoUrl).then(res => res.arrayBuffer());
-      //const logoImage = await pdfDoc.embedPng(logoImageBytes);
-      
-      // Option 2: If you have the logo in your project's public folder
-      const logoImageBytes = await fetch('/Puro_logo.png').then(res => res.arrayBuffer());
-      const logoImage = await pdfDoc.embedPng(logoImageBytes);
-      
-      // Draw the logo (adjust dimensions as needed)
-      page.drawImage(logoImage, {
-        x: 50,
-        y: 680,
-        width: 200,
-        height: 150,
-      });
-      
-      
-    } catch (logoError) {
-      console.warn('Could not load logo:', logoError);
-      // Fallback to original header position if logo fails
-      page.drawText('Tätigkeitsnachweis', {
-        x: 50,
-        y: 800,
-        size: 16,
-        font: helveticaBold
-      });
-    }
+  // Option 1: Using from public folder (recommended)
+  const logoUrl = `${window.location.origin}/Puro_logo.png`;
+  const response = await fetch(logoUrl);
+  
+  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+  
+  const logoImageBytes = await response.arrayBuffer();
+  const logoImage = await pdfDoc.embedPng(logoImageBytes);
+  
+  page.drawImage(logoImage, {
+    x: 50,
+    y: 680,
+    width: 200,
+    height: 150,
+  });
+} catch (logoError) {
+  console.warn('Could not load logo:', logoError);
+  // Fallback
+  page.drawText('Tätigkeitsnachweis', {
+    x: 50,
+    y: 800,
+    size: 16,
+    font: helveticaBold
+  });
+}
 
     // Rest of your existing PDF generation code...
     page.drawText(`Einsatzbetrieb: ${formData.einsatzbetrieb}`, {
