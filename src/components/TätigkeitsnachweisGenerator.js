@@ -12,9 +12,9 @@ const TätigkeitsnachweisGenerator = () => {
     bemerkungen: ''
   });
 
-  useEffect(() => {
-    updateDaysForMonth();
-  }, [formData.monatJahr]);
+  seEffect(() => {
+  updateDaysForMonth();
+}, [updateDaysForMonth, formData.monatJahr]);
 
   const updateDaysForMonth = () => {
     try {
