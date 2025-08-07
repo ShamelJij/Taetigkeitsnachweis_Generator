@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';  // Added useCallback
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { format, getDaysInMonth, parse, isValid } from 'date-fns';
 
@@ -12,11 +12,10 @@ const TaetigkeitsnachweisGenerator = () => {
     bemerkungen: ''
   });
 
-  // Corrected useCallback with dependencies
   const updateDaysForMonth = useCallback(() => {
     try {
       const monthDate = parse(formData.monatJahr, 'MM/yyyy', new Date());
-      if (!isValid(monthDate)) return;
+      if (!isValid(monthDate)) return;  // Remove extra parenthesis here
       
       const daysInMonth = getDaysInMonth(monthDate);
       const newDays = Array(daysInMonth).fill().map((_, i) => ({
@@ -28,11 +27,12 @@ const TaetigkeitsnachweisGenerator = () => {
     } catch (e) {
       console.error('Invalid month format');
     }
-  }, [formData.monatJahr]); // Added dependency array here
+  }, [formData.monatJahr]);
 
   useEffect(() => {
     updateDaysForMonth();
   }, [updateDaysForMonth, formData.monatJahr]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
