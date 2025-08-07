@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { format, getDaysInMonth, parse, isValid } from 'date-fns';
 
-const TätigkeitsnachweisGenerator = () => {
+const TaetigkeitsnachweisGenerator = () => {
   const [formData, setFormData] = useState({
     einsatzbetrieb: '',
     einsatzort: '',
@@ -500,4 +500,4 @@ try {
   );
 };
 
-export default TätigkeitsnachweisGenerator;
+export default TaetigkeitsnachweisGenerator;

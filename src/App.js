@@ -1,5 +1,5 @@
 import React from 'react';
-import TätigkeitsnachweisGenerator from './components/TätigkeitsnachweisGenerator';
+import TätigkeitsnachweisGenerator from './components/TaetigkeitsnachweisGenerator';
 import './App.css';
 
 function App() {
