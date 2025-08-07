@@ -2,3 +2,6 @@
   base = "."  # Points to root directory
   command = "npm run build"
   publish = "build"  # Create React App outputs to root/build
+  
+[build.environment]
+  CI = "false"

@@ -12,11 +12,8 @@ const TaetigkeitsnachweisGenerator = () => {
     bemerkungen: ''
   });
 
-  useEffect(() => {
-  updateDaysForMonth();
-}, [updateDaysForMonth, formData.monatJahr]);
-
-  const updateDaysForMonth = () => {
+  // Corrected useCallback with dependencies
+  const updateDaysForMonth = useCallback(() => {
     try {
       const monthDate = parse(formData.monatJahr, 'MM/yyyy', new Date());
       if (!isValid(monthDate)) return;
@@ -31,8 +28,11 @@ const TaetigkeitsnachweisGenerator = () => {
     } catch (e) {
       console.error('Invalid month format');
     }
-  };
+  }, [formData.monatJahr]); // Added dependency array here
 
+  useEffect(() => {
+    updateDaysForMonth();
+  }, [updateDaysForMonth, formData.monatJahr]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
